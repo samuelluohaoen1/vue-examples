@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <!--
+        Use `v-on` directive to listen to events and specify the callback.
+        The callback should be defined in the methods field of the
+        corresponding Vue object.
+    -->
+    <button v-on:click="sayHi">click me</button>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: "How dare you!"
+        },
+        methods: {
+            sayHi: function () {
+                alert(this.message)
+            }
+        },
+
+    });
+</script>
+</html>

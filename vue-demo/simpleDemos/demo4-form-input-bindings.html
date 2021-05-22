@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <!--
+        By using the `v-model` directory, we have bound input data with
+        Model data, effectively achieving 2-way binding.
+    -->
+    <label>
+        Enter your favorite Singer: <input type="text" v-model="message">
+    </label>
+    <br>
+    <p>You have entered: {{ message }}</p>
+
+    <br>
+
+    Gender:
+    <!--
+        Note: Notice that even we specified `male` to be checked, when we run the
+        web page it is still not checked. This is because once v-model is used,
+        the attributes specifying default values are ignored. One can specify
+        default values using fields in Model instead.
+    -->
+    <input type="radio" name="gender" value="male" v-model="maleOrFemale" checked> Boy
+    <input type="radio" name="gender" value="female" v-model="maleOrFemale"> Girl
+    <br>
+    <p>You have chosen: {{ maleOrFemale }}</p>
+
+    <br>
+
+    <p> Where are they from?</p>
+    <select name="origin" id="singer" v-model="country">
+        <option value="noSelection" disabled>No Selection</option>
+        <option value="China">China</option>
+        <option value="Korea">Korea</option>
+        <option value="Japan">Japan</option>
+    </select>
+    <p>They are from: {{ country }}</p>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: "",
+            checked: false,
+            maleOrFemale: "",
+            country: "noSelection"
+        }
+    });
+</script>
+</html>

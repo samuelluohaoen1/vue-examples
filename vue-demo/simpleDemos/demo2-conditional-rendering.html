@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <!-- The `v-if` and `v-else` directives allow DOM elements to be rendered by condition only. -->
+    <!-- Or one can also do `v-if="ok===true"` -->
+    <h1 v-if="ok">Yes</h1>
+    <h1 v-else>No</h1>
+
+    <h1 v-if="type === 'A'">Type is A</h1>
+    <h1 v-else-if="type === 'B'">Type is B</h1>
+    <h1 v-else>Type is {{ type }}</h1>
+
+    <!-- Using `v-for` directive to iterate data-->
+    <ul>
+        <li v-for="(item, index) in items">
+            {{ item.message }} --- {{ index }}
+        </li>
+    </ul>
+
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            ok: false,
+            type: 'Z',
+            items: [{message: 23}, {message: 45}, {message: 67}, {message: 89}]
+        }
+    });
+</script>
+</html>

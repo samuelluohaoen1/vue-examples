@@ -1,0 +1,72 @@
+<!--This is an extremely basic web page using Vue aimed at introducing
+the idea of MVVM pattern and virtual DOM-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<!-- View  -->
+
+<!-- 5. Create a tag to present data -->
+<div id="app">
+    <!-- Notice that now we are no longer simply evluating the variable `message`
+     from the model layer. Now we are binding `message` in the View-Model layer
+     of the MVVM pattern where if `message` is updated in the Model layer, the
+     change is instantly reflected in the view layer. This is different from
+     simply doing: `document.getElementById("app").innerText = "somethine else"`.
+     The above operation needs DOM traversal which is very inefficient. This
+     technique is called Virtual DOM. -->
+
+    <!-- 6. Binding data -->
+    {{ message }}
+</div>
+
+<h2 class="hoverMe">
+    <!-- `v-bind` allows binding of data in attributes. -->
+    <!-- Things like `v-bind` are called directives. v obviously
+    stands for Vue. -->
+    <!-- See that now we can dynamically change the attributes by
+    changing the data bound!!! -->
+    <span v-bind:title="messageForSpan">
+        Hover mouse here to see data from the model layer.
+    </span>
+</h2>
+
+
+</body>
+
+<!-- 1. Importing Vue -->
+<!-- Note that this must be placed after the View layer else nothing works-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    // Model layer
+
+    // 2. Instantiating a Vue object
+    var vm = new Vue({
+        // 3. Specific the element where this Vue object is for
+        el: "#app",
+
+        // 4. Populate data
+        data: {
+            message: "Hello, Vue!",
+        }
+    });
+
+    var vmm = new Vue({
+
+        /* Note: Each Vue object can only bind to one specific tag.
+           For example, if there are multiple tags in class `.hoverMe`,
+           only the first occurrence will be bound. */
+        el: ".hoverMe",
+
+        data: {
+            messageForSpan: "Hello, v-bind!"
+        }
+    });
+</script>
+
+</html>

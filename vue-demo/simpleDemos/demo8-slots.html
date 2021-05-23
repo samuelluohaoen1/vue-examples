@@ -14,7 +14,11 @@ components. Thus, increases code reuse.
 <div id="app">
     <bl>
         <!-- The `:title` here is short for `v-bind:title` -->
-        <!-- We still need to specify slot names here to avoid ambiguity -->
+        <!--
+        We still need to specify slot names here to avoid ambiguity. Also, a
+        component can how many slots but we do not have to use them all.
+        This allows for more flexibility.
+         -->
         <bl-title slot="bl-title" :title="title"></bl-title>
         <bl-items slot="bl-items" v-for="book in books" :item="book"></bl-items>
     </bl>
@@ -54,7 +58,7 @@ components. Thus, increases code reuse.
             title: "Book List",
             books: ['Java: From Intro to Give Up', 'Linux: From Entry to Prison', 'MySQL: From CRUD to Exile']
         }
-    })
+    });
 
 </script>
 </html>

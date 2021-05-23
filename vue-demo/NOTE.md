@@ -4,4 +4,4 @@
 
 * The purpose of this module is to demonstrate basic Vue syntax and ideas.
 
-* For the in-depth full-blown Vue development workflow, like Vue CLI, refer to later modules.
+* For the in-depth full-blown Vue development workflow, we often use Vue CLI. Refer to later modules for Vue CLI.

@@ -1,0 +1,108 @@
+<!-- Using code from demo8 -->
+
+
+<!--
+Read this LAST:
+Ending thoughts on Vue components.
+See that components in Vue are extremely robust. They are like the frontend "Java bean".
+They enable high reuse of code, provide loose coupling among other components, also are
+highly configurable and customizable. We have truly achieve "Frontend Engineering".
+
+At this point, we can write some beautiful SPA (Single Page Application). But this
+is far from enough. We still need to learn how to manage a huge frontend project
+where there are many SPAs and other essential modules.
+-->
+
+
+<!--
+Read this FIRST:
+Consider this use case requirement:
+Now that we have a list, suppose we want to add an button to delete
+each entry of our list. We certainly can do this using old DOM
+traversal way. But how do we exploit Vue's 2-way bindings for this?
+Meaning, somehow we want to delete the datum in the list of our
+ViewModel layer, then the corresponding node in the View layer is
+deleted automatically.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <bl>
+        <bl-title slot="bl-title" :title="title"></bl-title>
+        <!--
+        5. Now, when we actually use the component we defined, we can bind the exposed callback interface
+        with the logic provided by the ViewModel layer. In this case, `v-on:remove="remove_book(index)"`.
+        This piece code simply translates to: "This component has a button and this button can be clicked.
+        However, the exact event of what should happen when clicked is still undefined. Well, I am gonna
+        have this button configured in a way so that when clicked, the data in my ViewModel layer is modified.
+        Thus, I am defining `remove_book()` in my ViewModel layer where the data is stored, and bind it
+        with the interface exposed by this component, namely `button_event`.
+        -->
+        <bl-items slot="bl-items" v-for="(book, index) in books" :item="book" :index="index" :button_text="'Delete'"
+                  v-on:button_event="remove_book(index)"></bl-items>
+    </bl>
+</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+
+
+    Vue.component("bl-title", {
+        props: ["title"],
+        template: '<div>Title: {{title}}</div>'
+    });
+
+    Vue.component("bl-items", {
+        props: ["item", "index", "button_text"],
+        // 1. We have added a button right next to each `<li>` and assigned `button_event` to
+        // be the callback. Notice that what this button does is completely configurable and
+        // up to the View layer designer. Suppose now we want to make it into a "Delete" button.
+        // However, since Vue is highly decoupled, there is no way this component
+        // can directly access the corresponding datum the the ViewModel layer. What do we do?
+        template: '<li>{{index}}. Item: {{item}} <button @click="button_event">{{button_text}}</button> </li>',
+        methods: {
+            // 2. We still define the `button_event` callback in the `methods` field of the component.
+            button_event: function () {
+                // 3. Instead of go to delete stuff like what one would normally do, we use
+                // `$emit()` to expose this event as an interface. Meaning, we inform the View
+                // layer that this component can be configured with a callback. The interface
+                // to configure such callback is named `button_event`.
+                this.$emit("button_event");
+            }
+        }
+    });
+
+    Vue.component("bl", {
+        template:
+            '<div>\
+                <slot name="bl-title"></slot>\
+                <ul>\
+                    <slot name="bl-items"></slot>\
+                </ul>\
+            </div>'
+    });
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            title: "Book List",
+            books: ['Java: From Intro to Give Up', 'Linux: From Entry to Prison', 'MySQL: From CRUD to Exile']
+        },
+        methods: {
+            // 4. We specify in the ViewModel layer the logic to play around with out data. In this case, we distribute
+            // the logic on how to remove a datum in the `books` list.
+            remove_book: function (index) {
+                this.books.splice(index, 1);
+            }
+        }
+    });
+
+</script>
+</html>

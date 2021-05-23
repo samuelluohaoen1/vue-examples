@@ -1,0 +1,60 @@
+<!--
+What are "slots"?
+Slots are mostly used to define complicated custom components. It allows recursively nesting of
+components. Thus, increases code reuse.
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <bl>
+        <!-- The `:title` here is short for `v-bind:title` -->
+        <!-- We still need to specify slot names here to avoid ambiguity -->
+        <bl-title slot="bl-title" :title="title"></bl-title>
+        <bl-items slot="bl-items" v-for="book in books" :item="book"></bl-items>
+    </bl>
+</div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+
+
+    // 1. Suppose we currently have some components that we want to combine into a bigger component.
+    Vue.component("bl-title", {
+        props: ["title"],
+        template: '<div>Title: {{title}}</div>'
+    });
+
+    Vue.component("bl-items", {
+        props: ["item"],
+        template: '<li>Item: {{item}}</li>'
+    });
+
+    // 2. Use `<slot></slot>` tag to define slots. We can insert other components into these slots.
+    Vue.component("bl", {
+        template:
+        // 3. In the `<slot>` tag, we want to specify the type of component to be used for that slot.
+            '<div>\
+                <slot name="bl-title"></slot>\
+                <ul>\
+                    <slot name="bl-items"></slot>\
+                </ul>\
+            </div>'
+    });
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            title: "Book List",
+            books: ['Java: From Intro to Give Up', 'Linux: From Entry to Prison', 'MySQL: From CRUD to Exile']
+        }
+    })
+
+</script>
+</html>

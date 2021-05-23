@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<div id="app">
+    <!-- `currentTime1()` is a regular method -->
+    <!-- `currentTime2()` is a "computed property" -->
+    <!-- 5. Notice how they are used differently -->
+    <P>Current Time 1: {{ currentTime1() }}</P>
+    <p>Current Time 2: {{ currentTime2 }}</p>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            message: "Hello, World!"
+        },
+        methods: {
+            currentTime1: function () {
+                return Date.now();
+            }
+        },
+        // 1. Entries in `computed` are whats called `computed properties`.
+        // They may look like functions. But eventually they are computed
+        // into a non-function property with the same name. These functions
+        // basically define how these properties are getting computed.
+        computed: {
+            currentTime2: function () {
+                this.message;   // 2. Computed properties only get recomputed when it is necessary.
+                                // For example, when `this.message`, something that is referenced
+                                // inside the function, has changed.
+
+                return Date.now();  // 3. This is a great feature of Vue! This means we can make it so
+                                    // that data are getting recomputed when absolutely necessary,
+                                    // saving resources! The computed properties are saved in browser
+                                    // cache for reuse.
+            }
+        }
+        // 4. Note: If methods in `computed` and `methods` have duplicate names,
+        // methods in `methods` field take priority.
+    });
+</script>
+</html>

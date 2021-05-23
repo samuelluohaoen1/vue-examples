@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+
+    <ul>
+        <!--
+        Components can also take arguments from the View layer to dynamically change their content.
+        We use the `v-bind:` directive to pass arguments to components. `arg` is the parameter name,
+        and `"item"` is the variable name of the data. We can use something like `"'item'"` to
+        indicate that we want to pass the string 'item'.
+        -->
+        <custom-component v-for="item in items" v-bind:arg="item"></custom-component>
+    </ul>
+
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script>
+    // 1. Defining a Vue component.
+    // This is a non-standard way to define a Vue component.
+    // Vue components usually have their own self-contained files with a ".vue" extension
+    Vue.component("custom-component", {
+
+        // 2. The props fields receive parameters passed by the `v-bind` directive from the View layer.
+        props: ["arg"],
+        template: '<li>I received an argument of {{arg}}</li>'
+    });
+
+
+    // 3. Notice that Vue components can only be used if it is bound by a Vue instance.
+    // Components definition must come before `vm` instantiation!
+    var vm = new Vue({
+        el: "#app",
+        data:{
+            items: ["Java", "Python", "C++"]
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* Use this in combination with the `v-cloak` */
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Use the `v-cloak` directive to hide UI before they are rendered -->
+<div id="vue" v-cloak>
+    <div>Response status: {{status}}</div>
+    <div>Response body: {{info}}</div>
+    <div>Response URL: <a v-bind:href="info.links[0].url">Click Me</a> </div>
+</div>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script title="text/javascript">
+    var vm = new Vue({
+        el: "#vue",
+
+        // SideNote: Other than the `data` field, we can also use the `data` function.
+        // Either way is fine. They are equivalent.
+        data(){
+            return{
+                status: null,
+
+                // 4. Note that we do not need to specify the structure of `info` because
+                // it is going to get overwritten after `this.info = response.data` anyway.
+                // But we can still do it to inform others the fields to be expected.
+                info: {
+                    name: null,
+                    address: {
+                        street: null,
+                        city: null,
+                        country: null
+                    },
+                    url: null
+                }
+            }
+        },
+
+        // 1. `mounted` is called a Lifecycle Hook. There are many hooks.
+        // Refer to the Vue instance life cycle for more information.
+        // Basically, at each stage of the lifecycle of a Vue instance,
+        // we can use these hooks to customize it.
+
+        // `mounted` hook executes after the HTML is compiled and mounted.
+        mounted() {
+
+            // 2. Axios is an async communication tool. It implements HTTP.
+            // It is implemented largely using JS's `promise`.
+            // Use `axios` to `get` "data.json". Notice the programming style of axios.
+            // Then use `then` function where it receives a lambda expression with `response`
+            // as its parameter. Notice that `then` automatically parses the JSON received
+            // into a JS object.
+            axios.get("../data.json").then(response => {
+                // Assign the returned data
+                this.status = response.status
+                this.info = response.data
+
+                // 3. Note that `response.data` contains the JS object parsed from the response JSON
+                console.log(response.data)
+            });
+        }
+    });
+</script>
+</html>

@@ -8,8 +8,8 @@
 
 <div id="app">
     <!--
-        By using the `v-model` directory, we have bound input data with
-        Model data, effectively achieving 2-way binding.
+    By using the `v-model` directory, we have bound input data with
+    Model data, effectively achieving 2-way binding.
     -->
     <label>
         Enter your favorite Singer: <input type="text" v-model="message">
@@ -21,10 +21,10 @@
 
     Gender:
     <!--
-        Note: Notice that even we specified `male` to be checked, when we run the
-        web page it is still not checked. This is because once v-model is used,
-        the attributes specifying default values are ignored. One can specify
-        default values using fields in Model instead.
+    Note: Notice that even we specified `male` to be checked, when we run the
+    web page it is still not checked. This is because once v-model is used,
+    the attributes specifying default values are ignored. One can specify
+    default values using fields in Model instead.
     -->
     <input type="radio" name="gender" value="male" v-model="maleOrFemale" checked> Boy
     <input type="radio" name="gender" value="female" v-model="maleOrFemale"> Girl
